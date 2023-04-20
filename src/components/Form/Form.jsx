@@ -4,19 +4,23 @@ import css from "./Form.module.css"
 import React, { useState } from 'react';
 
 
-
-const Form = (addContact, onSubmit) => {
+const Form = ({addContact, onSubmit}) => {
     const [name, setName] = useState("");
     const [number, setNumber] = useState("");
-
-    const nameInputId = nanoid(8);
-    const numberInputId = nanoid(8);
     
     const handleChange = event => {
-        setName (event.target)
-        setNumber (event.currentTarget)
+        const {name, value} = event.target;
 
+        switch (name) {
+            case "name": setName(value) ;
+                break;
+
+            case "number": setNumber(value);
+                break;
+
+            default: throw new Error();
         }
+    }
     
     const handleSubmit = event => {
             event.preventDefault()
@@ -36,8 +40,12 @@ const Form = (addContact, onSubmit) => {
             setName('')
             setNumber('')
         }
-        
+
+        const nameInputId = nanoid(5);
+        const numberInputId = nanoid(5);
+
 return (
+    
     <form onSubmit={handleSubmit} className={css.form}>
                 <label className={css.label} htmlFor={nameInputId}>Name   
                     <input className={css.input}

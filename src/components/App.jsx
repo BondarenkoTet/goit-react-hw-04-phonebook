@@ -21,7 +21,7 @@ const App = () => {
     if (contacts.find(contact => contact.name === newContact.name)) {
       alert(`${newContact.name} is already in your contacts.`);
     } else {
-      setContacts(...contacts, newContact)
+      setContacts([...contacts, newContact])
       window.localStorage.setItem('contacts', JSON.stringify(contacts))
     }
   };
@@ -35,7 +35,7 @@ const formSubmithandler = data => {
 
     const getVisibleContacts = () => {
     return contacts.filter(contact =>
-      (contact.name.toLowerCase().includes(filter.toLowerCase()))
+      (contact.name.toLowerCase().includes(filter))
       )
   }
 
