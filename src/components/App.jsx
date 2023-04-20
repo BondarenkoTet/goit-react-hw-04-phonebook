@@ -7,41 +7,22 @@ import Filter from "./Filter/Filter";
 
 
 const App = () => {
-  const [contacts,setContacts] = useState([]); 
-  const [filter, setFilter] = useState("");
 
+  const [contacts, setContacts] = useState(() => { 
+    return JSON.parse(window.localStorage.getItem("contacts")) ?? "";
+  })
+  const [filter, setFilter] = useState("");
+  
   useEffect(() => {
     window.localStorage.setItem("contacts", JSON.stringify(contacts));
-    // const contacts = localStorage.getItem("contacts");
-    // const parsedContacts = JSON.parse(contacts);
-
-    // if (parsedContacts) {
-    // setContacts({contacts: parsedContacts})
-    
-  },[contacts])
-  // componentDidMount() {
-//   console.log("App componentDidMount");
-//   const contacts = localStorage.getItem("contacts");
-//   const parsedContacts = JSON.parse(contacts);
-//   if (parsedContacts) {
-//   this.setState({contacts: parsedContacts})
-//   }
-// };
-
-// componentDidUpdate(prevProps, prevState) {
-//   if(this.state.contacts !== prevState.contacts) {
-//     localStorage.setItem("contacts", JSON.stringify(this.state.contacts)); 
-
-
+    }, [contacts])
+  
   const handleAddContact = newContact => {
     if (contacts.find(contact => contact.name === newContact.name)) {
       alert(`${newContact.name} is already in your contacts.`);
     } else {
-      setContacts([contacts, newContact])
-      
-      // this.setState(prevState => ({
-      //   contacts: [...prevState.contacts, newContact],
-      // }));
+      setContacts(...contacts, newContact)
+      window.localStorage.setItem('contacts', JSON.stringify(contacts))
     }
   };
 const formSubmithandler = data => {
@@ -49,20 +30,19 @@ const formSubmithandler = data => {
   };
 
   const changeFilter= (event) => {
-    setFilter(event.currentTarget.value)
-    //this.setState({filter: event.currentTarget.value})
+    setFilter(event.target.value)
 };
 
-  const getVisibleContacts = () => {
+    const getVisibleContacts = () => {
     return contacts.filter(contact =>
-      (contact.name.toLowerCase().includes(filter.toLowerCase())))
+      (contact.name.toLowerCase().includes(filter.toLowerCase()))
+      )
   }
 
-  const deleteContact = contactId => {setContacts(contacts.filter(contact => 
-      contact.id !== contactId))
-    //const contacts: contacts.filter(contact => contact.id !== contactId),
-}
-
+  const deleteContact = contactId => {
+    setContacts(contacts.filter(contact => contact.id !== contactId));
+    } 
+  
   const visibleContacts = getVisibleContacts();
   return (
     <>
@@ -112,8 +92,7 @@ export default App
 // componentDidUpdate(prevProps, prevState) {
 
 //   if(this.state.contacts !== prevState.contacts) {
-    
-//     localStorage.setItem("contacts", JSON.stringify(this.state.contacts)); 
+    //localStorage.setItem("contacts", JSON.stringify(this.state.contacts)); 
     
 // }
 // }

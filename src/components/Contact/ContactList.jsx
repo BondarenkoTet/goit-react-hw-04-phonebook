@@ -17,6 +17,6 @@ import css from "./ContactsList.module.css"
         </li>
     ))
     )
-
+        
 export default ContactList;
 
