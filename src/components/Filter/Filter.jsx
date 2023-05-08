@@ -1,16 +1,25 @@
-import React from "react";
+import { useDispatch } from "react-redux";
+import {filteredContacts} from "redux/inputSlice"
 import css from "./Filter.module.css"
 
-const Filter =({value, onChange}) => {
-    return<label className={css.label}>Find contacts by name
+export default function Filter() {
+    const dispatch =useDispatch();
+
+    const onFilter = e => {
+        dispatch(filteredContacts(e.target.value))
+    };
+
+    return (
+    <>
+    <label className={css.label}>Find contacts by name
         <input className={css.input}
             type="text"
             name="name"
-            value={value}
-            onChange={onChange}
+            onChange={onFilter}
         />
     </label>
-
+    </>
+    )
 }
 
-export default Filter;
+
