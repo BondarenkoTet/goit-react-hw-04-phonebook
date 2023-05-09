@@ -15,7 +15,7 @@ const handleSubmit = e => {
     id: nanoid(),
 };
     if (contacts.find(contact => contact.name === newContact.name)) {
-        return ("This contact is already in your phonebook")
+        alert ("This contact is already in your phonebook")
     } else {
         dispatch(addContacts(newContact));
     }
